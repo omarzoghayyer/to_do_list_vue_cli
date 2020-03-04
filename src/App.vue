@@ -1,28 +1,77 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header />
+    <AddTodo v-on:add-todo="addTodo"/>
+    <Todos v-bind:todos="todos"   v-on:del-todo="deleteTodo"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/layout/Header';
+import Todos from './components/Todos';
+import AddTodo from './components/AddTodo';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Header,
+    Todos,
+    AddTodo
+  },
+  data() {
+    return {
+      todos: [
+        {
+        id: 'number', 
+        title: "Todo One",
+        completed: false,
+      },
+       {
+        id: 2,
+        title: "Todo two",
+        completed: false,
+      },
+      {
+        id: 3,
+        title: "Todo three",
+        completed: false,
+      }
+    ]
+  } 
+ },
+ methods: {
+   deleteTodo(id){
+     this.todos = this.todos.filter(todo => todo.id !==id);
+   },
+   addTodo(newTodo) {
+     this.todos = [...this.todos, newTodo];
+   }
+ }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+body{
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  line-height: 1.4;
+}
+.btn {
+  display: inline;
+  border: none;
+  background: rgb(185, 182, 182);
+  color: rgb(19, 18, 18);
+  padding-right: 7px 20px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: rgb(156, 11, 55);
+}
+
 </style>
